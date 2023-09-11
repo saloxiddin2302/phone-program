@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alarm</title>
+    <link rel="stylesheet" href="./css/timer.css" />
+    <style>
+      body {
+        background-image: url(https://c4.wallpaperflare.com/wallpaper/666/167/593/dodge-challenger-srt-hellcat-widebody-dodge-challenger-2018-cars-4k-wallpaper-preview.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        backdrop-filter: initial;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        text-align: center;
+        align-items: center;
+      }
+
+      .screen {
+        background-image: url(https://c4.wallpaperflare.com/wallpaper/180/1009/141/dodge-dodge-challenger-srt-blue-car-car-dodge-challenger-hd-wallpaper-preview.jpg);
+        background-position: center;
+        background-size: cover;
+      }
+      .clock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1.5rem;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      label,
+      input[type="time"] {
+        font-size: 1.5rem;
+        margin-right: 10px;
+      }
+
+      audio {
+        display: none;
+      }
+
+      #stop-button {
+        background-color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="screen">
+      <p style="font-size: 20px; margin-top: 20px">DODGE SRT</p>
+      <div class="clock">
+        <div class="time">
+          <span id="hour"></span> : <span id="minute"></span> :
+          <span id="second"></span>
+        </div>
+        <div class="alarm">
+          <input
+            placeholder="Soat:"
+            type="number"
+            id="hourInput"
+            min="0"
+            max="23"
+            value="Soat:"
+          />
+          <input
+            placeholder="Daqiqa:"
+            type="number"
+            id="minuteInput"
+            min="0"
+            max="59"
+          />
+          <input
+            placeholder="Soniya:"
+            type="number"
+            id="secondInput"
+            min="0"
+            max="59"
+          />
+        </div>
+        <div class="alarm">
+          <button class="orna" onclick="setAlarm()">Play</button>
+          <button class="toxta" onclick="stopAlarm()">Pausa</button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="alarmSound">
+      <source src="./alarim.mp3" type="audio/mpeg" />
+    </audio>
+    <script>
+      function setAlarm() {
+        var hours = document.getElementById("hourInput").value;
+        var minutes = document.getElementById("minuteInput").value;
+        var seconds = document.getElementById("secondInput").value;
+        document.getElementById("hour").innerHTML = hours;
+        document.getElementById("minute").innerHTML = minutes;
+        document.getElementById("second").innerHTML = seconds;
+
+        if (hours == "" || minutes == "" || seconds == "") {
+          alert("Siz soat va daqiqa kiritmadingiz!");
+          return;
+        }
+
+        var now = new Date();
+        var alarmTime = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate(),
+          hours,
+          minutes,
+          seconds,
+          0
+        );
+
+        var timeToAlarm = alarmTime - now;
+
+        if (timeToAlarm < 0) {
+          alert("Soat o'tib ketdi!");
+          return;
+        }
+
+        setTimeout(playAlarm, timeToAlarm);
+      }
+
+      function playAlarm() {
+        document.getElementById("alarmSound").play();
+      }
+
+      function stopAlarm() {
+        document.getElementById("alarmSound").pause();
+        document.getElementById("alarmSound").currentTime = 0;
+      }
+    </script>
+  </body>
+</html>
